@@ -154,5 +154,495 @@
       }
     };
   </script>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>نموذج تسجيل — جامعة الإمام عبدالرحمن بن فيصل</title>
+
+  <!-- خط رسمي: IBM Plex Sans Arabic -->
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --brand:#004a8f; /* أزرق رسمي */
+      --brand-dark:#003b73;
+      --muted:#6b7280;
+      --card:#fff;
+      --bg:#f4f7fb;
+      --success:#1e9a4b;
+    }
+    *{box-sizing:border-box;font-family:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Roboto,Arial;}
+    body{margin:0;background:var(--bg);color:#07203a}
+    .container{max-width:1100px;margin:36px auto;padding:18px}
+    .center-cta{display:flex;align-items:center;justify-content:center;height:60vh}
+    .btn-primary{background:var(--brand);color:#fff;padding:14px 22px;border-radius:10px;border:0;font-size:18px;cursor:pointer;box-shadow:0 6px 18px rgba(4,19,56,0.08)}
+    .btn-primary:hover{background:var(--brand-dark)}
+    /* Card / form */
+    .card{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 6px 24px rgba(10,20,40,0.06)}
+    header.page-head{text-align:center;padding:18px 8px;margin-bottom:10px}
+    header.page-head h1{margin:6px 0;color:var(--brand);font-size:22px}
+    header.page-head p{margin:0;color:var(--muted);font-size:14px}
+
+    /* Grid: two columns layout */
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .full{grid-column:1/-1}
+    label{display:block;font-weight:600;margin-bottom:6px}
+    input[type=text], input[type=email], input[type=number], input[type=date], select, textarea {
+      width:100%;padding:10px;border:1px solid #d6dbe6;border-radius:8px;font-size:15px;background:#fff;
+    }
+    select:invalid{color:#888}
+    .small{font-size:13px;color:var(--muted);margin-top:6px}
+    fieldset{border:1px solid #e6ecf6;border-radius:10px;padding:14px;margin-bottom:12px;background:#fff}
+    legend{font-weight:700;color:var(--brand);padding:0 8px}
+    .file-row{display:flex;gap:10px;align-items:center}
+    .img-preview{max-width:140px;max-height:100px;border-radius:8px;border:1px solid #e1e6f0;padding:6px;background:#fbfdff;object-fit:cover}
+    .pdf-label{display:inline-block;padding:8px 10px;border-radius:8px;background:#eef6ff;border:1px solid #d8e7ff;color:var(--brand);font-weight:600}
+    .payment-section{background:#eaf3ff;border:2px solid var(--brand);padding:12px;border-radius:10px}
+
+    .actions{display:flex;gap:12px;justify-content:center;margin-top:14px}
+    .btn-secondary{background:#6b7280;color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
+    .muted{color:var(--muted);font-size:13px}
+
+    /* toast */
+    .toast{position:fixed;left:50%;transform:translateX(-50%);top:18px;background:#0b1221;color:#fff;padding:10px 16px;border-radius:8px;box-shadow:0 6px 20px rgba(2,6,23,0.2);display:none;z-index:9999}
+    .toast.show{display:block;animation:slideDown .28s ease}
+
+    @keyframes slideDown{from{transform:translate(-50%,-10px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+
+    /* success screen */
+    .success-box{text-align:center;padding:28px;border-radius:10px;background:#e8fbef;border:1px solid #dff3df;color:var(--success);display:none}
+    .success-box.show{display:block}
+
+    /* responsive */
+    @media (max-width:880px){
+      .form-grid{grid-template-columns:1fr}
+      .center-cta{height:40vh;padding:20px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- initial CTA -->
+    <div id="startScreen" class="center-cta card" aria-hidden="false">
+      <div style="text-align:center">
+        <h2 style="margin:0 0 8px;color:var(--brand)">نموذج تسجيل — جامعة الإمام عبدالرحمن بن فيصل</h2>
+        <p class="muted" style="margin:0 0 18px">اضغط على زر "تقديم طلب جديد" لبدء تعبئة طلب القبول</p>
+        <button id="openFormBtn" class="btn-primary">تقديم طلب جديد</button>
+      </div>
+    </div>
+
+    <!-- form card (hidden initially) -->
+    <div id="formCard" class="card" style="display:none" aria-hidden="true">
+      <header class="page-head">
+        <h1>نموذج تسجيل — جامعة الإمام عبدالرحمن بن فيصل</h1>
+        <p class="muted">املأ الحقول أدناه بدقة. الحقول بعلامة * مطلوبة.</p>
+      </header>
+
+      <form id="admissionForm" class="admission-form" novalidate>
+        <!-- Personal -->
+        <fieldset>
+          <legend>البيانات الشخصية / Personal Details</legend>
+          <div class="form-grid">
+            <div>
+              <label for="fullNameAr">الاسم الرباعي (بالعربية) *</label>
+              <input id="fullNameAr" name="fullNameAr" type="text" required placeholder="مثال: محمد بن عبدالله العلي">
+            </div>
+            <div>
+              <label for="fullNameEn">Full name (English)</label>
+              <input id="fullNameEn" name="fullNameEn" type="text" placeholder="Example: Mohammad bin Abdullah AlAli">
+            </div>
+
+            <div>
+              <label for="nationalId">رقم الهوية / الإقامة *</label>
+              <input id="nationalId" name="nationalId" type="text" required pattern="[0-9\-]{4,}">
+              <div class="small">أرقام فقط — الهوية الوطنية أو رقم الإقامة</div>
+            </div>
+
+            <div>
+              <label for="birthDate">تاريخ الميلاد / Date of birth *</label>
+              <input id="birthDate" name="birthDate" type="date" required>
+            </div>
+
+            <div>
+              <label for="gender">الجنس / Gender *</label>
+              <select id="gender" name="gender" required>
+                <option value="">اختر</option>
+                <option value="male">ذكر</option>
+                <option value="female">أنثى</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="nationality">الجنسية / Nationality *</label>
+              <select id="nationality" name="nationality" required>
+                <option value="">اختر</option>
+                <option value="saudi">سعودي / Saudi</option>
+                <option value="non_saudi">غير سعودي / Non-Saudi</option>
+              </select>
+            </div>
+
+            <div id="nonSaudiArea" style="display:none">
+              <label for="residencyNo">رقم الإقامة</label>
+              <input id="residencyNo" name="residencyNo" type="text" placeholder="رقم الإقامة - If available">
+            </div>
+
+            <div id="nonSaudiArea2" style="display:none">
+              <label for="residencyExpiry">تاريخ انتهاء الإقامة</label>
+              <input id="residencyExpiry" name="residencyExpiry" type="date">
+            </div>
+
+            <div>
+              <label for="phone">رقم الجوال / Mobile *</label>
+              <input id="phone" name="phone" type="text" required placeholder="05xxxxxxxx">
+            </div>
+
+            <div>
+              <label for="email">البريد الإلكتروني / Email *</label>
+              <input id="email" name="email" type="email" required placeholder="example@email.com">
+            </div>
+
+            <div class="full">
+              <label for="address">العنوان / Address</label>
+              <input id="address" name="address" type="text" placeholder="المدينة / المنطقة">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Academic -->
+        <fieldset>
+          <legend>البيانات الأكاديمية / Academic</legend>
+          <div class="form-grid">
+            <div>
+              <label for="certificateType">نوع الشهادة / Certificate type *</label>
+              <select id="certificateType" name="certificateType" required>
+                <option value="">اختر</option>
+                <option value="thnawy">ثانوي عام</option>
+                <option value="mokrart">نظام المقررات</option>
+                <option value="equivalent">معادلة (خارج السعودية)</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="gradYear">سنة التخرج / Graduation year *</label>
+              <input id="gradYear" name="gradYear" type="number" min="1980" max="2100" required placeholder="2025">
+            </div>
+
+            <div>
+              <label for="gpa">نسبة الثانوية / Percentage (%) *</label>
+              <input id="gpa" name="gpa" type="number" step="0.01" min="0" max="100" required placeholder="95.50">
+            </div>
+
+            <div>
+              <label for="qiyasId">رقم الجلوس (قياس) / Qiyas ID</label>
+              <input id="qiyasId" name="qiyasId" type="text" placeholder="إن وجد / if available">
+            </div>
+
+            <div>
+              <label for="qiyasQudrat">درجة القدرات / Qudrat</label>
+              <input id="qiyasQudrat" name="qiyasQudrat" type="number" min="0" max="100" placeholder="مثال: 80">
+            </div>
+
+            <div>
+              <label for="qiyasTahseeli">درجة التحصيلي / Tahseeli</label>
+              <input id="qiyasTahseeli" name="qiyasTahseeli" type="number" min="0" max="100" placeholder="مثال: 82">
+            </div>
+
+            <div class="full">
+              <label for="schoolName">جهة إصدار الشهادة / School or issuer</label>
+              <input id="schoolName" name="schoolName" type="text" placeholder="اسم المدرسة أو جهة الإصدار">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Choices -->
+        <fieldset>
+          <legend>الرغبات / Choices</legend>
+          <div class="form-grid">
+            <div>
+              <label for="choice1">الرغبة الأولى *</label>
+              <input id="choice1" name="choice1" type="text" required placeholder="مثال: هندسة كهربائية">
+            </div>
+            <div>
+              <label for="choice2">الرغبة الثانية</label>
+              <input id="choice2" name="choice2" type="text" placeholder="مثال: علوم الحاسب">
+            </div>
+            <div>
+              <label for="choice3">الرغبة الثالثة</label>
+              <input id="choice3" name="choice3" type="text" placeholder="مثال: طب">
+            </div>
+            <div>
+              <label for="track">المسار / Track</label>
+              <select id="track" name="track">
+                <option value="">اختر</option>
+                <option value="scientific">علمي</option>
+                <option value="literary">أدبي</option>
+                <option value="health">صحي</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Documents -->
+        <fieldset>
+          <legend>رفع المستندات / Documents</legend>
+          <div class="form-grid">
+            <div>
+              <label for="idFile">صورة الهوية / ID (jpg, png, pdf)</label>
+              <input id="idFile" name="idFile" type="file" accept=".jpg,.jpeg,.png,.pdf">
+              <div class="file-row small" id="idPreviewWrap" style="margin-top:8px;display:none">
+                <img id="idPreviewImg" class="img-preview" alt="معاينة الهوية">
+                <span id="idPreviewName" class="small" style="margin-inline-start:8px"></span>
+              </div>
+            </div>
+
+            <div>
+              <label for="certificateFile">صورة الشهادة / Certificate (jpg, png, pdf)</label>
+              <input id="certificateFile" name="certificateFile" type="file" accept=".jpg,.jpeg,.png,.pdf">
+              <div class="file-row small" id="certPreviewWrap" style="margin-top:8px;display:none">
+                <img id="certPreviewImg" class="img-preview" alt="معاينة الشهادة">
+                <span id="certPreviewName" class="small" style="margin-inline-start:8px"></span>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Payment -->
+        <fieldset class="payment-section">
+          <legend>رسوم القبول — 700 ريال</legend>
+
+          <div class="form-grid">
+            <div>
+              <label>رقم الحساب البنكي</label>
+              <input id="bankAccount" type="text" value="SA1980000857608010276380" readonly>
+            </div>
+            <div style="display:flex;align-items:flex-end;gap:8px;">
+              <button type="button" id="copyAccountBtn" class="btn-primary" style="padding:10px 12px;height:44px">نسخ الحساب</button>
+            </div>
+
+            <div>
+              <label for="payerAccount">رقم الحساب المحوّل منه</label>
+              <input id="payerAccount" name="payerAccount" type="text" placeholder="رقم الحساب الذي دفعت منه">
+            </div>
+
+            <div>
+              <label for="paymentDate">تاريخ العملية</label>
+              <input id="paymentDate" name="paymentDate" type="date">
+            </div>
+
+            <div class="full">
+              <label for="paymentReceipt">رفع إيصال الدفع / Payment receipt</label>
+              <input id="paymentReceipt" name="paymentReceipt" type="file" accept=".jpg,.jpeg,.png,.pdf">
+              <div class="file-row small" id="receiptPreviewWrap" style="margin-top:8px;display:none">
+                <img id="receiptPreviewImg" class="img-preview" alt="معاينة الإيصال">
+                <span id="receiptPreviewName" class="small" style="margin-inline-start:8px"></span>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Agreement -->
+        <fieldset>
+          <legend>الإقرار / Declaration</legend>
+          <label style="display:flex;gap:10px;align-items:center">
+            <input id="agree" name="agree" type="checkbox" required> أقر بأن جميع البيانات صحيحة وأتحمل مسؤوليتها.
+          </label>
+        </fieldset>
+
+        <div class="actions">
+          <button id="submitBtn" class="btn-primary" type="submit">إرسال الطلب</button>
+          <button id="cancelBtn" class="btn-secondary" type="button">إلغاء</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Success -->
+    <div id="successBox" class="success-box" style="margin-top:18px">
+      <h3 style="color:var(--brand)">✅ تم إرسال الطلب بنجاح</h3>
+      <p class="muted">شكرًا لك، سيتم معالجة طلبك وسيتم التواصل معك عبر الجوال أو البريد الإلكتروني.</p>
+    </div>
+
+  </div>
+
+  <!-- toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // Elements
+    const startScreen = document.getElementById('startScreen');
+    const openFormBtn = document.getElementById('openFormBtn');
+    const formCard = document.getElementById('formCard');
+    const admissionForm = document.getElementById('admissionForm');
+    const successBox = document.getElementById('successBox');
+    const toast = document.getElementById('toast');
+    const cancelBtn = document.getElementById('cancelBtn');
+
+    // fields for dynamic parts
+    const nationality = document.getElementById('nationality');
+    const nonSaudiArea = document.getElementById('nonSaudiArea');
+    const nonSaudiArea2 = document.getElementById('nonSaudiArea2');
+
+    // file previews
+    const idFile = document.getElementById('idFile');
+    const idPreviewWrap = document.getElementById('idPreviewWrap');
+    const idPreviewImg = document.getElementById('idPreviewImg');
+    const idPreviewName = document.getElementById('idPreviewName');
+
+    const certificateFile = document.getElementById('certificateFile');
+    const certPreviewWrap = document.getElementById('certPreviewWrap');
+    const certPreviewImg = document.getElementById('certPreviewImg');
+    const certPreviewName = document.getElementById('certPreviewName');
+
+    const paymentReceipt = document.getElementById('paymentReceipt');
+    const receiptPreviewWrap = document.getElementById('receiptPreviewWrap');
+    const receiptPreviewImg = document.getElementById('receiptPreviewImg');
+    const receiptPreviewName = document.getElementById('receiptPreviewName');
+
+    // open form in same page
+    openFormBtn.addEventListener('click', () => {
+      startScreen.style.display = 'none';
+      formCard.style.display = 'block';
+      formCard.setAttribute('aria-hidden','false');
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+
+    // cancel -> back to start
+    cancelBtn.addEventListener('click', () => {
+      admissionForm.reset();
+      hideAllPreviews();
+      formCard.style.display = 'none';
+      startScreen.style.display = 'flex';
+      successBox.classList.remove('show');
+      successBox.style.display = 'none';
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+
+    // nationality toggle
+    nationality.addEventListener('change', () => {
+      if(nationality.value === 'non_saudi'){
+        nonSaudiArea.style.display = 'block';
+        nonSaudiArea2.style.display = 'block';
+      } else {
+        nonSaudiArea.style.display = 'none';
+        nonSaudiArea2.style.display = 'none';
+      }
+    });
+
+    // helpers: preview file
+    function handlePreview(inputEl, wrapEl, imgEl, nameEl){
+      const file = inputEl.files[0];
+      if(!file){ wrapEl.style.display='none'; imgEl.src=''; nameEl.textContent=''; return; }
+      const ext = file.name.split('.').pop().toLowerCase();
+      // show image for images, otherwise show filename
+      if(['jpg','jpeg','png','gif'].includes(ext)){
+        const reader = new FileReader();
+        reader.onload = function(e){
+          imgEl.src = e.target.result;
+          wrapEl.style.display = 'flex';
+          nameEl.textContent = file.name;
+        }
+        reader.readAsDataURL(file);
+      } else {
+        // PDF or other - don't try image, show placeholder and filename
+        imgEl.src = '';
+        wrapEl.style.display = 'flex';
+        nameEl.textContent = file.name + ' (PDF)';
+        // hide image element if not image
+        imgEl.style.display = 'none';
+        setTimeout(()=>{ imgEl.style.display = ''; }, 20);
+      }
+    }
+
+    function hideAllPreviews(){
+      [idPreviewWrap, certPreviewWrap, receiptPreviewWrap].forEach(w=>{ w.style.display='none'; });
+      [idPreviewImg, certPreviewImg, receiptPreviewImg].forEach(i=>i.src='');
+      [idPreviewName, certPreviewName, receiptPreviewName].forEach(n=>n.textContent='');
+    }
+
+    idFile.addEventListener('change', ()=> handlePreview(idFile, idPreviewWrap, idPreviewImg, idPreviewName));
+    certificateFile.addEventListener('change', ()=> handlePreview(certificateFile, certPreviewWrap, certPreviewImg, certPreviewName));
+    paymentReceipt.addEventListener('change', ()=> handlePreview(paymentReceipt, receiptPreviewWrap, receiptPreviewImg, receiptPreviewName));
+
+    // copy bank account with toast
+    const copyAccountBtn = document.getElementById('copyAccountBtn');
+    const bankAccount = document.getElementById('bankAccount');
+
+    copyAccountBtn.addEventListener('click', async () => {
+      const text = bankAccount.value.trim();
+      try{
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          await navigator.clipboard.writeText(text);
+        } else {
+          bankAccount.select();
+          document.execCommand('copy');
+        }
+        showToast('تم نسخ رقم الحساب بنجاح');
+      }catch(e){
+        showToast('فشل النسخ — حاول يدوياً');
+      }
+    });
+
+    function showToast(msg, time=2200){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      toast.style.display='block';
+      setTimeout(()=>{ toast.classList.remove('show'); toast.style.display='none'; }, time);
+    }
+
+    // Submit handler: package data and simulate sending
+    admissionForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // browser validation
+      if(!admissionForm.checkValidity()){
+        admissionForm.reportValidity();
+        return;
+      }
+
+      // collect data (example)
+      const formData = new FormData(admissionForm);
+      // append files if you want to send to backend
+      // formData.get('idFile') etc.
+
+      // === Here: send formData to your backend endpoint via fetch ===
+      // Example (uncomment & change URL to your server):
+      /*
+      fetch('/api/submit-admission', {
+        method: 'POST',
+        body: formData
+      }).then(r => r.json()).then(res => {
+        // handle response...
+      }).catch(err => {
+        showToast('خطأ في الإرسال، حاول مرة أخرى');
+      });
+      */
+
+      // For demo: simulate success
+      admissionForm.style.display = 'none';
+      successBox.style.display = 'block';
+      successBox.classList.add('show');
+      showToast('تم إرسال الطلب بنجاح');
+      // clear previews & reset form for next
+      hideAllPreviews();
+      admissionForm.reset();
+
+      // show start CTA so user can submit new request
+      setTimeout(()=>{
+        formCard.style.display = 'none';
+        startScreen.style.display = 'flex';
+        successBox.classList.remove('show');
+        successBox.style.display = 'none';
+        // scroll top
+        window.scrollTo({top:0,behavior:'smooth'});
+      }, 1400); // after short delay
+    });
+
+    // accessibility: allow Enter on start button
+    openFormBtn.addEventListener('keyup', (e)=>{ if(e.key==='Enter') openFormBtn.click(); });
+  </script>
 </body>
 </html>
+</body>
+</html>
+
