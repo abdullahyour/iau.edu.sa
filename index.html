@@ -154,7 +154,7 @@
       }
     };
   </script>
-<!doctype html>
+  <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8" />
@@ -166,7 +166,6 @@
 *{box-sizing:border-box;font-family:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Roboto,Arial;}
 body{margin:0;background:var(--bg);color:#07203a}
 .container{max-width:1100px;margin:36px auto;padding:18px}
-.center-cta{display:flex;align-items:center;justify-content:center;height:60vh}
 .btn-primary{background:var(--brand);color:#fff;padding:14px 22px;border-radius:10px;border:0;font-size:18px;cursor:pointer;box-shadow:0 6px 18px rgba(4,19,56,0.08)}
 .btn-primary:hover{background:var(--brand-dark)}
 .card{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 6px 24px rgba(10,20,40,0.06)}
@@ -183,7 +182,6 @@ fieldset{border:1px solid #e6ecf6;border-radius:10px;padding:14px;margin-bottom:
 legend{font-weight:700;color:var(--brand);padding:0 8px}
 .file-row{display:flex;gap:10px;align-items:center;margin-top:6px}
 .img-preview{max-width:140px;max-height:100px;border-radius:8px;border:1px solid #e1e6f0;padding:6px;background:#fbfdff;object-fit:cover}
-.pdf-label{display:inline-block;padding:8px 10px;border-radius:8px;background:#eef6ff;border:1px solid #d8e7ff;color:var(--brand);font-weight:600}
 .payment-section{background:#eaf3ff;border:2px solid var(--brand);padding:12px;border-radius:10px}
 .actions{display:flex;gap:12px;justify-content:center;margin-top:14px}
 .btn-secondary{background:#6b7280;color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
@@ -193,27 +191,26 @@ legend{font-weight:700;color:var(--brand);padding:0 8px}
 @keyframes slideDown{from{transform:translate(-50%,-10px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
 .success-box{text-align:center;padding:28px;border-radius:10px;background:#e8fbef;border:1px solid #dff3df;color:var(--success);display:none}
 .success-box.show{display:block}
-@media (max-width:880px){.form-grid{grid-template-columns:1fr}.center-cta{height:40vh;padding:20px}}
+@media (max-width:880px){.form-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="container">
 
-<div id="startScreen" class="center-cta card">
-  <div style="text-align:center">
-    <h2 style="margin:0 0 8px;color:var(--brand)">نموذج تسجيل — جامعة الإمام عبدالرحمن بن فيصل</h2>
-    <p class="muted" style="margin:0 0 18px">اضغط على زر "تقديم طلب جديد" لبدء تعبئة طلب القبول</p>
-    <button id="openFormBtn" class="btn-primary">تقديم طلب جديد</button>
-  </div>
+<!-- زر طلب جديد -->
+<div style="text-align:center; margin:20px 0;">
+  <button id="openFormBtn" class="btn-primary">تقديم طلب جديد</button>
 </div>
 
-<div id="formCard" class="card" style="display:none">
+<!-- النموذج -->
+<div id="formCard" class="card" style="display:none; max-width:900px; margin:auto">
   <header class="page-head">
     <h1>نموذج تسجيل — جامعة الإمام عبدالرحمن بن فيصل</h1>
     <p class="muted">املأ الحقول أدناه بدقة. الحقول بعلامة * مطلوبة.</p>
   </header>
 
   <form id="admissionForm" class="formcarryForm" action="https://formcarry.com/s/ON8xkE-353d" enctype="multipart/form-data" novalidate>
+    <!-- Personal -->
     <fieldset>
       <legend>البيانات الشخصية / Personal Details</legend>
       <div class="form-grid">
@@ -221,13 +218,7 @@ legend{font-weight:700;color:var(--brand);padding:0 8px}
         <div><label>Full name (English)</label><input type="text" name="fullNameEn"></div>
         <div><label>رقم الهوية / الإقامة *</label><input type="text" name="nationalId" required pattern="[0-9\-]{4,}"></div>
         <div><label>تاريخ الميلاد / Date of birth *</label><input type="date" name="birthDate" required></div>
-        <div><label>الجنس / Gender *</label>
-          <select name="gender" required>
-            <option value="">اختر</option>
-            <option value="male">ذكر</option>
-            <option value="female">أنثى</option>
-          </select>
-        </div>
+        <div><label>الجنس / Gender *</label><select name="gender" required><option value="">اختر</option><option value="male">ذكر</option><option value="female">أنثى</option></select></div>
         <div><label>الجنسية / Nationality *</label>
           <select id="nationality" name="nationality" required>
             <option value="">اختر</option>
@@ -243,17 +234,11 @@ legend{font-weight:700;color:var(--brand);padding:0 8px}
       </div>
     </fieldset>
 
+    <!-- Academic -->
     <fieldset>
       <legend>البيانات الأكاديمية / Academic</legend>
       <div class="form-grid">
-        <div><label>نوع الشهادة / Certificate type *</label>
-          <select name="certificateType" required>
-            <option value="">اختر</option>
-            <option value="thnawy">ثانوي عام</option>
-            <option value="mokrart">نظام المقررات</option>
-            <option value="equivalent">معادلة (خارج السعودية)</option>
-          </select>
-        </div>
+        <div><label>نوع الشهادة / Certificate type *</label><select name="certificateType" required><option value="">اختر</option><option value="thnawy">ثانوي عام</option><option value="mokrart">نظام المقررات</option><option value="equivalent">معادلة (خارج السعودية)</option></select></div>
         <div><label>سنة التخرج / Graduation year *</label><input type="number" name="gradYear" min="1980" max="2100" required></div>
         <div><label>نسبة الثانوية / Percentage (%) *</label><input type="number" name="gpa" min="0" max="100" step="0.01" required></div>
         <div><label>رقم الجلوس (قياس) / Qiyas ID</label><input type="text" name="qiyasId"></div>
@@ -263,23 +248,18 @@ legend{font-weight:700;color:var(--brand);padding:0 8px}
       </div>
     </fieldset>
 
+    <!-- Choices -->
     <fieldset>
       <legend>الرغبات / Choices</legend>
       <div class="form-grid">
         <div><label>الرغبة الأولى *</label><input type="text" name="choice1" required></div>
         <div><label>الرغبة الثانية</label><input type="text" name="choice2"></div>
         <div><label>الرغبة الثالثة</label><input type="text" name="choice3"></div>
-        <div><label>المسار / Track</label>
-          <select name="track">
-            <option value="">اختر</option>
-            <option value="scientific">علمي</option>
-            <option value="literary">أدبي</option>
-            <option value="health">صحي</option>
-          </select>
-        </div>
+        <div><label>المسار / Track</label><select name="track"><option value="">اختر</option><option value="scientific">علمي</option><option value="literary">أدبي</option><option value="health">صحي</option></select></div>
       </div>
     </fieldset>
 
+    <!-- Documents -->
     <fieldset>
       <legend>رفع المستندات / Documents</legend>
       <div class="form-grid">
@@ -301,11 +281,10 @@ legend{font-weight:700;color:var(--brand);padding:0 8px}
       </div>
     </fieldset>
 
+    <!-- Declaration -->
     <fieldset>
       <legend>الإقرار / Declaration</legend>
-      <label style="display:flex;gap:10px;align-items:center">
-        <input type="checkbox" name="agree" required> أقر بأن جميع البيانات صحيحة وأتحمل مسؤوليتها.
-      </label>
+      <label style="display:flex;gap:10px;align-items:center"><input type="checkbox" name="agree" required> أقر بأن جميع البيانات صحيحة وأتحمل مسؤوليتها.</label>
     </fieldset>
 
     <div class="actions">
@@ -315,79 +294,72 @@ legend{font-weight:700;color:var(--brand);padding:0 8px}
   </form>
 </div>
 
-<div id="successBox" class="success-box" style="margin-top:18px">
+<!-- Success -->
+<div id="successBox" class="success-box">
   <h3 style="color:var(--brand)">✅ تم إرسال الطلب بنجاح</h3>
   <p class="muted">شكرًا لك، سيتم معالجة طلبك وسيتم التواصل معك عبر الجوال أو البريد الإلكتروني.</p>
 </div>
 
-</div>
-
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<!-- Toast -->
+<div id="toast" class="toast"></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script>
-const startScreen=document.getElementById('startScreen');
-const openFormBtn=document.getElementById('openFormBtn');
-const formCard=document.getElementById('formCard');
-const admissionForm=document.getElementById('admissionForm');
-const successBox=document.getElementById('successBox');
-const cancelBtn=document.getElementById('cancelBtn');
-const nationality=document.getElementById('nationality');
-const nonSaudiArea=document.getElementById('nonSaudiArea');
-const nonSaudiArea2=document.getElementById('nonSaudiArea2');
+// Show form button
+const openFormBtn = document.getElementById('openFormBtn');
+const formCard = document.getElementById('formCard');
+const admissionForm = document.getElementById('admissionForm');
+const successBox = document.getElementById('successBox');
+const toast = document.getElementById('toast');
+const cancelBtn = document.getElementById('cancelBtn');
 
-const idFile=document.getElementById('idFile');
-const certFile=document.getElementById('certFile');
-const receiptFile=document.getElementById('receiptFile');
+// Show/hide form
+openFormBtn.addEventListener('click', ()=>{formCard.style.display='block';window.scrollTo({top:formCard.offsetTop-20,behavior:'smooth'});});
+cancelBtn.addEventListener('click', ()=>{admissionForm.reset();hideAllPreviews();formCard.style.display='none';successBox.style.display='none';});
 
-const idPreviewWrap=document.getElementById('idPreviewWrap');
-const idPreviewImg=document.getElementById('idPreviewImg');
-const idPreviewName=document.getElementById('idPreviewName');
+// Nationality toggle
+const nationality = document.getElementById('nationality');
+const nonSaudiArea = document.getElementById('nonSaudiArea');
+const nonSaudiArea2 = document.getElementById('nonSaudiArea2');
+nationality.addEventListener('change', ()=>{if(nationality.value==='non_saudi'){nonSaudiArea.style.display='block';nonSaudiArea2.style.display='block';}else{nonSaudiArea.style.display='none';nonSaudiArea2.style.display='none';}});
 
-const certPreviewWrap=document.getElementById('certPreviewWrap');
-const certPreviewImg=document.getElementById('certPreviewImg');
-const certPreviewName=document.getElementById('certPreviewName');
+// File previews
+function handlePreview(inputEl, wrapEl, imgEl, nameEl){
+  const file = inputEl.files[0];
+  if(!file){wrapEl.style.display='none';imgEl.src='';nameEl.textContent='';return;}
+  const ext = file.name.split('.').pop().toLowerCase();
+  if(['jpg','jpeg','png','gif'].includes(ext)){const reader=new FileReader();reader.onload=function(e){imgEl.src=e.target.result;wrapEl.style.display='flex';nameEl.textContent=file.name;};reader.readAsDataURL(file);}
+  else{imgEl.src='';wrapEl.style.display='flex';nameEl.textContent=file.name+' (PDF)';imgEl.style.display='none';setTimeout(()=>{imgEl.style.display='';},20);}
+}
+function hideAllPreviews(){['idPreviewWrap','certPreviewWrap','receiptPreviewWrap'].forEach(id=>document.getElementById(id).style.display='none');['idPreviewImg','certPreviewImg','receiptPreviewImg'].forEach(id=>document.getElementById(id).src='');['idPreviewName','certPreviewName','receiptPreviewName'].forEach(id=>document.getElementById(id).textContent='');}
+['idFile','certFile','receiptFile'].forEach(id=>document.getElementById(id).addEventListener('change',()=>handlePreview(document.getElementById(id),document.getElementById(id+'PreviewWrap'),document.getElementById(id+'PreviewImg'),document.getElementById(id+'PreviewName'))));
 
-const receiptPreviewWrap=document.getElementById('receiptPreviewWrap');
-const receiptPreviewImg=document.getElementById('receiptPreviewImg');
-const receiptPreviewName=document.getElementById('receiptPreviewName');
+// Toast
+function showToast(msg,time=2200){toast.textContent=msg;toast.classList.add('show');toast.style.display='block';setTimeout(()=>{toast.classList.remove('show');toast.style.display='none';},time);}
 
-openFormBtn.addEventListener('click',()=>{startScreen.style.display='none';formCard.style.display='block';window.scrollTo({top:0,behavior:'smooth'});});
-cancelBtn.addEventListener('click',()=>{admissionForm.reset();hideAllPreviews();formCard.style.display='none';startScreen.style.display='flex';successBox.classList.remove('show');successBox.style.display='none';window.scrollTo({top:0,behavior:'smooth'});});
-nationality.addEventListener('change',()=>{if(nationality.value==='non_saudi'){nonSaudiArea.style.display='block';nonSaudiArea2.style.display='block';}else{nonSaudiArea.style.display='none';nonSaudiArea2.style.display='none';}});
-
-function handlePreview(inputEl,wrapEl,imgEl,nameEl){const file=inputEl.files[0];if(!file){wrapEl.style.display='none';imgEl.src='';nameEl.textContent='';return;}const ext=file.name.split('.').pop().toLowerCase();if(['jpg','jpeg','png','gif'].includes(ext)){const reader=new FileReader();reader.onload=function(e){imgEl.src=e.target.result;wrapEl.style.display='flex';nameEl.textContent=file.name;}reader.readAsDataURL(file);}else{imgEl.src='';wrapEl.style.display='flex';nameEl.textContent=file.name+' (PDF)';imgEl.style.display='none';setTimeout(()=>{imgEl.style.display='';},20);}}
-function hideAllPreviews(){[idPreviewWrap,certPreviewWrap,receiptPreviewWrap].forEach(w=>w.style.display='none');[idPreviewImg,certPreviewImg,receiptPreviewImg].forEach(i=>i.src='');[idPreviewName,certPreviewName,receiptPreviewName].forEach(n=>n.textContent='');}
-[idFile,certFile,receiptFile].forEach((el,i)=>el.addEventListener('change',()=>{handlePreview(idFile,idPreviewWrap,idPreviewImg,idPreviewName);handlePreview(certFile,certPreviewWrap,certPreviewImg,certPreviewName);handlePreview(receiptFile,receiptPreviewWrap,receiptPreviewImg,receiptPreviewName);}));
-
-$(".formcarryForm").submit(function(e){
+// Submit via Formcarry
+$('.formcarryForm').submit(function(e){
   e.preventDefault();
-  if(!admissionForm.checkValidity()){admissionForm.reportValidity();return;}
-  var href=$(this).attr("action");
+  const formData = new FormData(this);
+  // ensure all required files are attached
+  const requiredFiles = ['idFile','certFile','receiptFile'];
+  for(let f of requiredFiles){if(!document.getElementById(f).files[0]){showToast('الرجاء رفع جميع الملفات المطلوبة');return;}}
   $.ajax({
-      type:"POST",
-      url:href,
-      data:new FormData(this),
-      dataType:"json",
-      processData:false,
-      contentType:false,
-      success:function(response){
-        if(response.status=="success"){
-          admissionForm.style.display='none';
-          successBox.style.display='block';
-          successBox.classList.add('show');
-          hideAllPreviews();
-          admissionForm.reset();
-          setTimeout(()=>{formCard.style.display='none';startScreen.style.display='flex';successBox.classList.remove('show');successBox.style.display='none';window.scrollTo({top:0,behavior:'smooth'});},1400);
-        }else if(response.code===422){alert("Field validation failed");$.each(response.errors,function(key){$('[name="'+key+'"]').addClass('formcarry-field-error');});}else{alert("An error occured: "+response.message);}
-      },
-      error:function(jqXHR){const err=jqXHR.responseJSON;alert("Request failed, "+err.title+": "+err.message);}
+    type:"POST",
+    url:$(this).attr('action'),
+    data:formData,
+    dataType:'json',
+    processData:false,
+    contentType:false,
+    success:function(response){if(response.status==='success'){admissionForm.style.display='none';successBox.style.display='block';showToast('تم إرسال الطلب بنجاح');setTimeout(()=>{admissionForm.reset();hideAllPreviews();formCard.style.display='none';successBox.style.display='none';},2000);}}, 
+    error:function(jqXHR){const err=jqXHR.responseJSON;alert("Request failed: "+(err?.title||'')+" "+(err?.message||''));}
   });
 });
 </script>
 </body>
-          </html>
+</html>
 </body>
 </html>
+
 
 
