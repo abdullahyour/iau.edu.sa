@@ -182,7 +182,6 @@ fieldset{border:1px solid #e6ecf6;border-radius:10px;padding:14px;margin-bottom:
 legend{font-weight:700;color:var(--brand);padding:0 8px}
 .file-row{display:flex;gap:10px;align-items:center;margin-top:6px}
 .img-preview{max-width:140px;max-height:100px;border-radius:8px;border:1px solid #e1e6f0;padding:6px;background:#fbfdff;object-fit:cover}
-.payment-section{background:#eaf3ff;border:2px solid var(--brand);padding:12px;border-radius:10px}
 .actions{display:flex;gap:12px;justify-content:center;margin-top:14px}
 .btn-secondary{background:#6b7280;color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
 .muted{color:var(--muted);font-size:13px}
@@ -197,7 +196,7 @@ legend{font-weight:700;color:var(--brand);padding:0 8px}
 <body>
 <div class="container">
 
-<!-- زر طلب جديد -->
+<!-- زر تقديم طلب جديد -->
 <div style="text-align:center; margin:20px 0;">
   <button id="openFormBtn" class="btn-primary">تقديم طلب جديد</button>
 </div>
@@ -210,80 +209,90 @@ legend{font-weight:700;color:var(--brand);padding:0 8px}
   </header>
 
   <form id="admissionForm" class="formcarryForm" action="https://formcarry.com/s/ON8xkE-353d" enctype="multipart/form-data" novalidate>
-    <!-- Personal -->
+    
+    <!-- البيانات الشخصية -->
     <fieldset>
       <legend>البيانات الشخصية / Personal Details</legend>
       <div class="form-grid">
         <div><label>الاسم الرباعي (بالعربية) *</label><input type="text" name="fullNameAr" required></div>
         <div><label>Full name (English)</label><input type="text" name="fullNameEn"></div>
-        <div><label>رقم الهوية / الإقامة *</label><input type="text" name="nationalId" required pattern="[0-9\-]{4,}"></div>
-        <div><label>تاريخ الميلاد / Date of birth *</label><input type="date" name="birthDate" required></div>
-        <div><label>الجنس / Gender *</label><select name="gender" required><option value="">اختر</option><option value="male">ذكر</option><option value="female">أنثى</option></select></div>
-        <div><label>الجنسية / Nationality *</label>
+        <div><label>رقم الهوية / الإقامة *</label><input type="text" name="nationalId" required></div>
+        <div><label>تاريخ الميلاد *</label><input type="date" name="birthDate" required></div>
+        <div><label>الجنس *</label><select name="gender" required><option value="">اختر</option><option value="male">ذكر</option><option value="female">أنثى</option></select></div>
+        <div><label>الجنسية *</label>
           <select id="nationality" name="nationality" required>
             <option value="">اختر</option>
-            <option value="saudi">سعودي / Saudi</option>
-            <option value="non_saudi">غير سعودي / Non-Saudi</option>
+            <option value="saudi">سعودي</option>
+            <option value="non_saudi">غير سعودي</option>
           </select>
         </div>
         <div id="nonSaudiArea" style="display:none"><label>رقم الإقامة</label><input type="text" name="residencyNo"></div>
         <div id="nonSaudiArea2" style="display:none"><label>تاريخ انتهاء الإقامة</label><input type="date" name="residencyExpiry"></div>
-        <div><label>رقم الجوال / Mobile *</label><input type="text" name="phone" required></div>
-        <div><label>البريد الإلكتروني / Email *</label><input type="email" name="email" required></div>
-        <div class="full"><label>العنوان / Address</label><input type="text" name="address"></div>
+        <div><label>رقم الجوال *</label><input type="text" name="phone" required></div>
+        <div><label>البريد الإلكتروني *</label><input type="email" name="email" required></div>
+        <div class="full"><label>العنوان</label><input type="text" name="address"></div>
       </div>
     </fieldset>
 
-    <!-- Academic -->
+    <!-- البيانات الأكاديمية -->
     <fieldset>
-      <legend>البيانات الأكاديمية / Academic</legend>
+      <legend>البيانات الأكاديمية</legend>
       <div class="form-grid">
-        <div><label>نوع الشهادة / Certificate type *</label><select name="certificateType" required><option value="">اختر</option><option value="thnawy">ثانوي عام</option><option value="mokrart">نظام المقررات</option><option value="equivalent">معادلة (خارج السعودية)</option></select></div>
-        <div><label>سنة التخرج / Graduation year *</label><input type="number" name="gradYear" min="1980" max="2100" required></div>
-        <div><label>نسبة الثانوية / Percentage (%) *</label><input type="number" name="gpa" min="0" max="100" step="0.01" required></div>
-        <div><label>رقم الجلوس (قياس) / Qiyas ID</label><input type="text" name="qiyasId"></div>
-        <div><label>درجة القدرات / Qudrat</label><input type="number" name="qiyasQudrat" min="0" max="100"></div>
-        <div><label>درجة التحصيلي / Tahseeli</label><input type="number" name="qiyasTahseeli" min="0" max="100"></div>
-        <div class="full"><label>جهة إصدار الشهادة / School or issuer</label><input type="text" name="schoolName"></div>
+        <div><label>نوع الشهادة *</label><select name="certificateType" required><option value="">اختر</option><option>ثانوي عام</option><option>نظام المقررات</option><option>معادلة</option></select></div>
+        <div><label>سنة التخرج *</label><input type="number" name="gradYear" required></div>
+        <div><label>النسبة المئوية *</label><input type="number" name="gpa" min="0" max="100" required></div>
+        <div><label>رقم قياس</label><input type="text" name="qiyasId"></div>
+        <div><label>درجة القدرات</label><input type="number" name="qiyasQudrat" min="0" max="100"></div>
+        <div><label>درجة التحصيلي</label><input type="number" name="qiyasTahseeli" min="0" max="100"></div>
       </div>
     </fieldset>
 
-    <!-- Choices -->
+    <!-- الدفع -->
     <fieldset>
-      <legend>الرغبات / Choices</legend>
+      <legend>معلومات الدفع / Payment Info</legend>
       <div class="form-grid">
-        <div><label>الرغبة الأولى *</label><input type="text" name="choice1" required></div>
-        <div><label>الرغبة الثانية</label><input type="text" name="choice2"></div>
-        <div><label>الرغبة الثالثة</label><input type="text" name="choice3"></div>
-        <div><label>المسار / Track</label><select name="track"><option value="">اختر</option><option value="scientific">علمي</option><option value="literary">أدبي</option><option value="health">صحي</option></select></div>
+        <div>
+          <label>رقم الحساب</label>
+          <input type="text" id="bankAccount" value="SA1980000857608010276380" readonly>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:8px;">
+          <button type="button" id="copyAccountBtn" class="btn-primary" style="padding:10px 12px;height:44px">نسخ الحساب</button>
+        </div>
+        <div><label>رقم الحساب المحول منه *</label><input type="text" name="bankAccountFrom" required></div>
+        <div><label>اسم البنك *</label><input type="text" name="bankName" required></div>
+        <div><label>تاريخ العملية *</label><input type="date" name="paymentDate" required></div>
+        <div><label>المبلغ المحول</label><input type="text" name="paymentAmount" value="500 ريال" readonly></div>
+        <div class="full">
+          <label>رفع إيصال الدفع *</label>
+          <input type="file" name="paymentReceipt" id="receiptFile" required accept=".jpg,.jpeg,.png,.pdf">
+          <div class="file-row" id="receiptPreviewWrap" style="display:none">
+            <img class="img-preview" id="receiptPreviewImg">
+            <span id="receiptPreviewName" class="small"></span>
+          </div>
+        </div>
       </div>
     </fieldset>
 
-    <!-- Documents -->
+    <!-- المستندات -->
     <fieldset>
       <legend>رفع المستندات / Documents</legend>
       <div class="form-grid">
         <div>
-          <label>صورة الهوية / ID *</label>
+          <label>صورة الهوية *</label>
           <input type="file" name="idFile" id="idFile" required accept=".jpg,.jpeg,.png,.pdf">
           <div class="file-row" id="idPreviewWrap" style="display:none"><img class="img-preview" id="idPreviewImg"><span id="idPreviewName" class="small"></span></div>
         </div>
         <div>
-          <label>صورة الشهادة / Certificate *</label>
+          <label>صورة الشهادة *</label>
           <input type="file" name="certificateFile" id="certFile" required accept=".jpg,.jpeg,.png,.pdf">
           <div class="file-row" id="certPreviewWrap" style="display:none"><img class="img-preview" id="certPreviewImg"><span id="certPreviewName" class="small"></span></div>
-        </div>
-        <div>
-          <label>رفع إيصال الدفع / Payment receipt *</label>
-          <input type="file" name="paymentReceipt" id="receiptFile" required accept=".jpg,.jpeg,.png,.pdf">
-          <div class="file-row" id="receiptPreviewWrap" style="display:none"><img class="img-preview" id="receiptPreviewImg"><span id="receiptPreviewName" class="small"></span></div>
         </div>
       </div>
     </fieldset>
 
-    <!-- Declaration -->
+    <!-- الإقرار -->
     <fieldset>
-      <legend>الإقرار / Declaration</legend>
+      <legend>الإقرار</legend>
       <label style="display:flex;gap:10px;align-items:center"><input type="checkbox" name="agree" required> أقر بأن جميع البيانات صحيحة وأتحمل مسؤوليتها.</label>
     </fieldset>
 
@@ -294,72 +303,102 @@ legend{font-weight:700;color:var(--brand);padding:0 8px}
   </form>
 </div>
 
-<!-- Success -->
 <div id="successBox" class="success-box">
   <h3 style="color:var(--brand)">✅ تم إرسال الطلب بنجاح</h3>
-  <p class="muted">شكرًا لك، سيتم معالجة طلبك وسيتم التواصل معك عبر الجوال أو البريد الإلكتروني.</p>
+  <p class="muted">سيتم مراجعة الطلب والتواصل معك عبر البريد أو الجوال.</p>
 </div>
 
-<!-- Toast -->
 <div id="toast" class="toast"></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script>
-// Show form button
-const openFormBtn = document.getElementById('openFormBtn');
-const formCard = document.getElementById('formCard');
-const admissionForm = document.getElementById('admissionForm');
-const successBox = document.getElementById('successBox');
-const toast = document.getElementById('toast');
-const cancelBtn = document.getElementById('cancelBtn');
+const openFormBtn=document.getElementById('openFormBtn');
+const formCard=document.getElementById('formCard');
+const admissionForm=document.getElementById('admissionForm');
+const successBox=document.getElementById('successBox');
+const toast=document.getElementById('toast');
+const cancelBtn=document.getElementById('cancelBtn');
+const nationality=document.getElementById('nationality');
+const nonSaudiArea=document.getElementById('nonSaudiArea');
+const nonSaudiArea2=document.getElementById('nonSaudiArea2');
 
-// Show/hide form
-openFormBtn.addEventListener('click', ()=>{formCard.style.display='block';window.scrollTo({top:formCard.offsetTop-20,behavior:'smooth'});});
-cancelBtn.addEventListener('click', ()=>{admissionForm.reset();hideAllPreviews();formCard.style.display='none';successBox.style.display='none';});
+openFormBtn.addEventListener('click',()=>{formCard.style.display='block';window.scrollTo({top:formCard.offsetTop-20,behavior:'smooth'});});
+cancelBtn.addEventListener('click',()=>{admissionForm.reset();hideAllPreviews();formCard.style.display='none';successBox.style.display='none';});
 
-// Nationality toggle
-const nationality = document.getElementById('nationality');
-const nonSaudiArea = document.getElementById('nonSaudiArea');
-const nonSaudiArea2 = document.getElementById('nonSaudiArea2');
-nationality.addEventListener('change', ()=>{if(nationality.value==='non_saudi'){nonSaudiArea.style.display='block';nonSaudiArea2.style.display='block';}else{nonSaudiArea.style.display='none';nonSaudiArea2.style.display='none';}});
+nationality.addEventListener('change',()=>{if(nationality.value==='non_saudi'){nonSaudiArea.style.display='block';nonSaudiArea2.style.display='block';}else{nonSaudiArea.style.display='none';nonSaudiArea2.style.display='none';}});
 
-// File previews
-function handlePreview(inputEl, wrapEl, imgEl, nameEl){
-  const file = inputEl.files[0];
+function handlePreview(inputEl,wrapEl,imgEl,nameEl){
+  const file=inputEl.files[0];
   if(!file){wrapEl.style.display='none';imgEl.src='';nameEl.textContent='';return;}
-  const ext = file.name.split('.').pop().toLowerCase();
-  if(['jpg','jpeg','png','gif'].includes(ext)){const reader=new FileReader();reader.onload=function(e){imgEl.src=e.target.result;wrapEl.style.display='flex';nameEl.textContent=file.name;};reader.readAsDataURL(file);}
-  else{imgEl.src='';wrapEl.style.display='flex';nameEl.textContent=file.name+' (PDF)';imgEl.style.display='none';setTimeout(()=>{imgEl.style.display='';},20);}
+  const ext=file.name.split('.').pop().toLowerCase();
+  if(['jpg','jpeg','png'].includes(ext)){
+    const reader=new FileReader();
+    reader.onload=function(e){imgEl.src=e.target.result;wrapEl.style.display='flex';nameEl.textContent=file.name;};
+    reader.readAsDataURL(file);
+  }else{
+    imgEl.src='';wrapEl.style.display='flex';nameEl.textContent=file.name+' (PDF)';imgEl.style.display='none';
+  }
 }
-function hideAllPreviews(){['idPreviewWrap','certPreviewWrap','receiptPreviewWrap'].forEach(id=>document.getElementById(id).style.display='none');['idPreviewImg','certPreviewImg','receiptPreviewImg'].forEach(id=>document.getElementById(id).src='');['idPreviewName','certPreviewName','receiptPreviewName'].forEach(id=>document.getElementById(id).textContent='');}
+function hideAllPreviews(){
+  ['idPreviewWrap','certPreviewWrap','receiptPreviewWrap'].forEach(id=>document.getElementById(id).style.display='none');
+  ['idPreviewImg','certPreviewImg','receiptPreviewImg'].forEach(id=>document.getElementById(id).src='');
+  ['idPreviewName','certPreviewName','receiptPreviewName'].forEach(id=>document.getElementById(id).textContent='');
+}
 ['idFile','certFile','receiptFile'].forEach(id=>document.getElementById(id).addEventListener('change',()=>handlePreview(document.getElementById(id),document.getElementById(id+'PreviewWrap'),document.getElementById(id+'PreviewImg'),document.getElementById(id+'PreviewName'))));
 
-// Toast
-function showToast(msg,time=2200){toast.textContent=msg;toast.classList.add('show');toast.style.display='block';setTimeout(()=>{toast.classList.remove('show');toast.style.display='none';},time);}
+document.getElementById('copyAccountBtn').addEventListener('click',async()=>{
+  try{
+    await navigator.clipboard.writeText(document.getElementById('bankAccount').value);
+    showToast('تم نسخ الحساب بنجاح');
+  }catch(e){
+    alert('فشل النسخ');
+  }
+});
 
-// Submit via Formcarry
-$('.formcarryForm').submit(function(e){
-  e.preventDefault();
-  const formData = new FormData(this);
-  // ensure all required files are attached
-  const requiredFiles = ['idFile','certFile','receiptFile'];
-  for(let f of requiredFiles){if(!document.getElementById(f).files[0]){showToast('الرجاء رفع جميع الملفات المطلوبة');return;}}
-  $.ajax({
-    type:"POST",
-    url:$(this).attr('action'),
-    data:formData,
-    dataType:'json',
-    processData:false,
-    contentType:false,
-    success:function(response){if(response.status==='success'){admissionForm.style.display='none';successBox.style.display='block';showToast('تم إرسال الطلب بنجاح');setTimeout(()=>{admissionForm.reset();hideAllPreviews();formCard.style.display='none';successBox.style.display='none';},2000);}}, 
-    error:function(jqXHR){const err=jqXHR.responseJSON;alert("Request failed: "+(err?.title||'')+" "+(err?.message||''));}
-  });
+function showToast(msg){
+  toast.textContent=msg;
+  toast.classList.add('show');
+  setTimeout(()=>{toast.classList.remove('show');},2000);
+}
+
+// إرسال البيانات عبر AJAX Formcarry
+$(".formcarryForm").submit(function(e){
+    e.preventDefault();
+    var href = $(this).attr("action");
+    $.ajax({
+        type: "POST",
+        url: href,
+        data: new FormData(this),
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        success: function(response){
+          if(response.status == "success"){
+              admissionForm.reset();
+              hideAllPreviews();
+              successBox.style.display='block';
+              window.scrollTo({top:formCard.offsetTop-20,behavior:'smooth'});
+          } else if(response.code === 422){
+            alert("Field validation failed");
+            $.each(response.errors, function(key) {
+              $('[name="' + key + '"]').addClass('formcarry-field-error');
+            });
+          } else{
+            alert("An error occured: " + response.message);
+          }
+        },
+        error: function(jqXHR){
+          const errorObject = jqXHR.responseJSON || {};
+          alert("Request failed: " + (errorObject.message || jqXHR.statusText));
+        }
+    });
 });
 </script>
 </body>
-</html>
+  </html>
 </body>
 </html>
+
 
 
 
